@@ -1,0 +1,14 @@
+#!/bin/sh
+# Check This https://regex101.com/r/jkAuu3/1
+# original_regex='((CDW-)([1-9][0-9])|((feat|fix|chore|refactor|style|test|docs)(((\w{0,15})))?))(:.\S.*)';
+
+commit_regex='(:[\D]+:\s)?(((Feat|Fix|Chore|Refactor|Style|Test|Docs)(\((\w{0,15})\))?))(\:.*\S.*)$';
+error_msg="Aborting commit. Your commit message format is invalid, please check the references."
+commit_message="$1";
+
+if ! grep -iqE "$commit_regex" "$commit_message";
+then
+    echo "$error_msg" >&2
+    exit 1
+fi
+exit 0
